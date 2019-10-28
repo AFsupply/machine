@@ -1,18 +1,13 @@
- //#include <ESP8266WiFi.h>
- //#include <WiFi.h>
- //#include <ESP8266WebServer.h>
- //#include <TimeLib.h>
- //#include <NtpClientLib.h>
- #include <ArduinoJson.h>
+/*  #include <ArduinoJson.h>
  #include <FS.h>
  #include <Stepper.h>
  #include <ESP8266HTTPClient.h>
  #include <ESPAsyncWebServer.h>
  #include <ESPAsyncTCP.h>
- #include <AsyncJson.h>
+ #include <AsyncJson.h> */
 
  
- #define ssid1      "Livebox-C250"      // WiFi SSID
+ #define ssid1      "Livebox"      // WiFi SSID
  #define password1  ""  // WiFi password
  #define ssid     "ESP_recycleBot"      // WiFi SSID
  #define password ""  // WiFi password

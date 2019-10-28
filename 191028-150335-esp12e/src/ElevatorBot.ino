@@ -28,7 +28,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
  //Library
- #include <ESP8266WiFi.h>
+/*  #include <ESP8266WiFi.h>
  #include <ESP8266WebServer.h>
  #include <ESP8266HTTPClient.h>
  #include <TimeLib.h>
@@ -36,7 +36,7 @@
  #include <ArduinoJson.h>
  #include <FS.h>
  #include <PubSubClient.h>
- #include <Stepper.h>
+ #include <Stepper.h> */
 // #include "Plastickind.h"
 
  // Motor variable
@@ -47,7 +47,7 @@
  int step_number = 0;
 
  //Wifi variable
- #define ssid1      "Livebox-"      // WiFi SSID
+ #define ssid1      "Livebox-C250"      // WiFi SSID
  #define password1  ""  // WiFi password
  #define ssid     "ESP_recycleBot"      // WiFi SSID
  #define password ""  // WiFi password
