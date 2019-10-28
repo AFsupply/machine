@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html charset="UTF-8">
+  <head>
+    <meta name="viewport">
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+    <!-- <script src="js/jquery.min.js"></script> -->
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+    <!-- <script src="js/bootstrap.min.js"></script> -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/bootstrap-table.min.js"></script>
+    <!-- <script src="js/bootstrap-table.min.js"></script> -->
+    <!--link(rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/bootstrap-table.min.css")-->
+    <link rel="stylesheet" href="css/bootstrap-table.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/superhero/bootstrap.min.css" rel="stylesheet" title="main">
+    <title>Demo ESP8266 SPIFFS + Boostrap - www.projetsdiy.fr</title>
+  </head>
+  <body>
+    <div id="json"></div>
+    <div id="plasticKind"></div>
+    <div id="table"></div>
+    <input type="button" onClick="addPlasticKind()" id="btn" value="Add one plasticKind">
+    <input type="button" onClick="savePlasticList()" id="btn" value="Save plasticList">
+    <div id="form"></div>
+<!--     <div id="json"></div>
+
+      <div id="plasticKind"></div>
+
+      <table id="jsonTable" border="1" style="border-collapse:collapse;" cellpadding="5">
+        </table> -->
+
+    <!--script(src='js/script.js')-->
+    <script>
+
+      var plasticKinds = [];
+      var plasticKind2;
+      /* var plasticKind = {
+        "plName": "Global",
+        "weltTemp": "230",
+        "timeRecycling": 0,
+        "timestamp": "18:12:42 09/04/2018"
+      }; */
+
+
+      setPlasticKinds();
+      console.log(plasticKinds)
+      alert( "Data Loaded: ")
+
+      function setPlasticKinds(){
+        $.get('/plasticList.json', function(data){
+          $("#json").append(JSON.stringify(data)+ " ");
+          for (i=0; i < data.length; i++){
+            plasticKinds.push(data[i]);
+          }
+        }).fail(function(err){
+          console.log("err getJSON mesures.json " +JSON.stringify(err))
+        });
+      };
+
+      function savePlasticKind(plasticKind){
+        plasticKinds.push(plasticKind)
+      };       
+  
+    function addPlasticKind(){
+      $("#btn").fadeOut(10)
+      var form = $("<form/>", 
+        { action:'',
+          id:'addPlasticKindForm',
+          class: 'ajax',
+          style: 'text-align:center ; background-color:blue ; margin-left:40% ; margin-right:40% ; border-radius:10px'
+        }
+      );        
+      form.append( 
+        $("<input>", 
+         {  type:'text', 
+            placeholder:'Plastic Name', 
+            name:'plName', 
+            style:'margin-top:30px ; border-radius:5px'}
+        )
+      );
+      form.append($("<div>")) 
+      form.append( 
+        $("<input>", 
+          { type:'text', 
+            placeholder:'Welt Temp', 
+            name:'weltTemp', 
+            style:'border-radius:5px ; margin-top:30px'}
+        )
+      );      
+      form.append($("<div>")) 
+      form.append( 
+        $("<input>", 
+          { type:'submit', 
+            value:'Save', 
+            style:'margin:30px' }
+        )
+      );
+
+      $("#form").append(form);
+
+      $( "form.ajax" ).on('submit', function() {
+        event.preventDefault();
+        var data = {};
+        $(this).find('[name]').each(function(index, value){
+          name = $(this).attr('name'), value = $(this).val();
+          data[name]= value;
+        })
+      console.log(data)
+      console.log(Date.now())
+      data["timeRecycling"] = 0
+      data["timestamp"] = Date.now()
+      console.log(data)
+      plasticKinds.push(data)
+      console.log(plasticKinds)  
+      });
+    }
+
+    function savePlasticList(){
+      console.log(plasticKinds)
+      var data = JSON.stringify(plasticKinds)
+      console.log(data)
+      /* $.post('/savePlasticList', function(data){
+        alert("succes");
+      }) */
+      $.ajax({
+        type: "POST",
+        url: "/savePlasticList",
+        data: data,
+        success: function(){alert("succes")},
+        dataType: "json"
+      });
+    } 
+      
+    </script>
+  </body>
+</html>
